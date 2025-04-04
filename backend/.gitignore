@@ -1,2 +1,6 @@
 .venv/
 .env
+hackbyte/
+data/
+__pycache__/
+models/
