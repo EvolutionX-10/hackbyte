@@ -4,7 +4,6 @@ import Chart from "@/components/chart";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-
 	return (
 		<div className="h-screen w-screen flex items-center justify-center">
 			<div className="p-8 w-full">
