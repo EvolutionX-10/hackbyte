@@ -33,12 +33,12 @@ const Chart = () => {
 	const [isConnected, setIsConnected] = useState(false);
 
 	// Function to format datetime from your format to lightweight charts format
-    const formatDatetime = (datetime: string): Time => {
-        // Replace the space with "T" to conform to ISO format
-        const isoDatetime = datetime.replace(" ", "T");
-        const date = new Date(isoDatetime);
-        return Math.floor(date.getTime() / 1000) as Time; // Cast to Time
-    };
+	const formatDatetime = (datetime: string): Time => {
+		// Replace the space with "T" to conform to ISO format
+		const isoDatetime = datetime.replace(" ", "T");
+		const date = new Date(isoDatetime);
+		return Math.floor(date.getTime() / 1000) as Time; // Cast to Time
+	};
 
 	// Convert WebSocket data to candlestick format
 	const convertToCandlestick = (data: StockDataPoint): CandlestickData => {

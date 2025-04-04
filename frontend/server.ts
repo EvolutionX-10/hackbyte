@@ -22,10 +22,13 @@ function parseCSV(filePath: string) {
 
 	return rows.map((row) => {
 		const values = row.split(",");
-		return headers.reduce((acc, header, index) => {
-			acc[header] = values[index]?.trim();
-			return acc;
-		}, {} as Record<string, string>);
+		return headers.reduce(
+			(acc, header, index) => {
+				acc[header] = values[index]?.trim();
+				return acc;
+			},
+			{} as Record<string, string>,
+		);
 	});
 }
 
