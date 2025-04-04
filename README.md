@@ -20,13 +20,19 @@
 - [ ] Root route with pitching
 
 ### Ankit + Cyberpsych
-- [ ] Analyse Model for ML Training
-- [ ] Train Model based on datasets
-- [ ] Test Accuracy
-- [ ] Dataset Collection
-- [ ] Data Modeling
-- [ ] Feature Extraction
+- [x] Analyse Model for ML Training
+- [x] Train Model based on datasets
+- [x] Test Accuracy
+- [x] Dataset Collection
+- [x] Data Modeling
+- [x] Feature Extraction
 - [ ] Flask Setup
 - [ ] Routes Implementation
+- [ ] Bot conditions (buy sell hold)
+- [ ] Bot logic
+- [ ] Bot logs
+- [ ] Sockets for data recieving
+- [ ] Handling the data
+- [ ] Socket for logs`
 
 
