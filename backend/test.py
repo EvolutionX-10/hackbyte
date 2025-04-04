@@ -12,6 +12,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_and_prepare_data(filepath):
     df = pd.read_csv(filepath)
+    df.drop(columns=['Datetime'], inplace=True)
     FEATURES = df.columns.tolist()
     df = df[FEATURES]
     return df, FEATURES
@@ -71,7 +72,7 @@ def show_sample_predictions(y_true, y_pred, scaler, features, sample_size=5):
         print(f"Actual: {actual:.2f} | Predicted: {predicted:.2f}")
 
 
-def run_evaluation(ticker, model_dir="models", data_dir="data", seq_length=400):
+def run_evaluation(ticker, model_dir="models", data_dir="data", seq_length=300):
     print(f"\n📈 Evaluating model for: {ticker}")
     filepath = os.path.join(data_dir, f"Data_{ticker}.csv")
     model_path = os.path.join(model_dir, f"model_{ticker}.pth")

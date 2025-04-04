@@ -23,8 +23,10 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_and_prepare_data(filepath):
     df = pd.read_csv(filepath)
-    FEATURES = [feature for feature in df.columns]
-    df = df[FEATURES]
+    df.drop(columns=['Datetime'], axis = 1,inplace=True)
+    FEATURES = df.columns.tolist()   
+    # df = df[FEATURES]
+    print(FEATURES)
     return df, FEATURES
 
 

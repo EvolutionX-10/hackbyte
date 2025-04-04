@@ -10,6 +10,8 @@ def download_stock_data(ticker, period='1mo', interval='1m'):
     print("Downloading data for " + ticker)
     df = yf.download(ticker, period=period, interval=interval)
     df.dropna(inplace=True)
+    df = df.reset_index()  # Move datetime index to a column
+    df['Datetime'] = pd.to_datetime(df['Datetime'])  # Ensure it's properly formatted
     return df
 
 def compute_technical_indicators(df):
