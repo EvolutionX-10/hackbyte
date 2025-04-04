@@ -1,50 +1,51 @@
 import numpy as np
 import pandas as pd
 import yfinance as yf
+import pandas_ta as ta
 
 def download_stock_data(ticker, period='1mo', interval='1m'):
     """
     Download historical stock data using yfinance.
-    (Note: yfinance 1-minute data might be limited to recent periods.)
     """
+    print("Downloading data for " + ticker)
     df = yf.download(ticker, period=period, interval=interval)
     df.dropna(inplace=True)
     return df
 
 def compute_technical_indicators(df):
     """
-    Compute simple technical indicators and add as columns:
-    - Simple Moving Average (SMA)
-    - Exponential Moving Average (EMA)
-    - Rate of Change (ROC)
-    - Relative Strength Index (RSI)
+    Compute technical indicators using pandas-ta and add them as columns.
     """
     df = df.copy()
-    # SMA
-    df['SMA_10'] = df['Close'].rolling(window=10).mean()
-    # EMA
-    df['EMA_10'] = df['Close'].ewm(span=10, adjust=False).mean()
-    # ROC
-    df['ROC'] = df['Close'].pct_change(periods=10)
-    # RSI (using a simple implementation)
-    delta = df['Close'].diff()
-    gain = (delta.where(delta > 0, 0)).rolling(window=14).mean()
-    loss = (-delta.where(delta < 0, 0)).rolling(window=14).mean()
-    rs = gain / (loss + 1e-8)
-    df['RSI'] = 100 - (100 / (1 + rs))
+    
+    # Ensure the DataFrame has a flat index
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+    
+    # Calculate various technical indicators using pandas-ta
+    df.ta.sma(length=10, append=True)  # Simple Moving Average
+    df.ta.ema(length=10, append=True)  # Exponential Moving Average
+    df.ta.roc(length=10, append=True)  # Rate of Change
+    df.ta.rsi(length=14, append=True)  # Relative Strength Index
+    df.ta.macd(append=True)  # MACD
     
     # Fill missing values
     df.fillna(method='bfill', inplace=True)
     return df
 
 def main():
-    ticker = "AAPL"
-    df = download_stock_data(ticker, period='7d', interval='1m')
-    df = compute_technical_indicators(df)
-    print(df.head())
-    #Saving the file in .csv format
-    df.to_csv(f"data/Data_{ticker}.csv")
+    # Get user input for 3 tickers
+    tickers = ["RELIANCE.NS", "INFY.NS", "ITC.NS"]
     
+    # Process each ticker separately and save individual files
+    for ticker in tickers:
+        # Download and compute indicators
+        df = download_stock_data(ticker, period='max', interval='1m')
+        df = compute_technical_indicators(df)
+        
+        # Save individual file
+        df.to_csv(f"Data/Data_{ticker}.csv", index=False)
+        print(f"Saved data for {ticker}")
 
 if __name__ == '__main__':
     main()
