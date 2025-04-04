@@ -1,0 +1,9 @@
+python-dotenv
+flask
+yfinance
+pandas 
+numpy 
+torch 
+torchvision 
+torchaudio
+scikit-learn
