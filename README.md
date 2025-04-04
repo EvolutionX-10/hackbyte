@@ -9,13 +9,15 @@
 ## Internal Checkpoints
 
 ### Evo + Ice
-- [ ] Setup Project
-- [ ] Explore Simulation
-- [ ] Next.js Sockets
-- [ ] Implement Simulation
-- [ ] Implement Prisma + Mongodb
+- [x] Setup Project
+- [x] Explore Simulation
+- [x] Next.js Sockets
+- [x] Implement Simulation
+- [x] Implement Prisma + Mongodb
 - [ ] Seed database
-- [ ] tbd
+- [ ] Candle Stick graph / charts
+- [ ] Logs in Dashboard Route with charts
+- [ ] Root route with pitching
 
 ### Ankit + Cyberpsych
 - [ ] Analyse Model for ML Training
