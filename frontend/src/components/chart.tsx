@@ -92,7 +92,7 @@ const Chart = () => {
 				},
 			},
 			width: chartContainerRef.current.clientWidth,
-			height: 500,
+			height: 584,
 			handleScale: {
 				axisPressedMouseMove: true,
 			},
