@@ -192,9 +192,6 @@ const Chart = () => {
 				const data: StockDataPoint = JSON.parse(event.data);
 				const candlestick = convertToCandlestick(data);
 
-				// Debug: log the formatted time
-				console.log("Formatted time:", candlestick.time);
-
 				if (seriesRef.current) {
 					// Update the chart with new data
 					seriesRef.current.update(candlestick);
