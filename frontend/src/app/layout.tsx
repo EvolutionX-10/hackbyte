@@ -37,9 +37,7 @@ export default function RootLayout({
 				<Hydrate>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						<Navbar />
-						<main>
-							{children}
-						</main>
+						<main>{children}</main>
 						<Toaster />
 					</ThemeProvider>
 				</Hydrate>

@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LearningTrack, LearningSection } from "@/lib/ai";
+import { LearningTrack } from "@/lib/ai";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
@@ -48,7 +48,7 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 					sections: completedSections,
 					answers: quizAnswers,
 					lastUpdated: new Date().toISOString(),
-				})
+				}),
 			);
 
 			// Check if all sections are completed
