@@ -12,7 +12,7 @@ const handle = nextApp.getRequestHandler();
 const clients: Set<WebSocket> = new Set();
 
 // Path to the dataset
-const datasetPath = path.join(process.cwd(), "dataset", "Data_RELIANCE.NS.csv");
+const datasetPath = path.join(process.cwd(), "dataset", "Data_INFY.NS.csv");
 
 // Function to parse the CSV file into an array of objects
 function parseCSV(filePath: string) {

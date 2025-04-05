@@ -1,7 +1,14 @@
+import Navbar from "@/components/Navbar";
+
 export default function Home() {
 	return (
-		<main className="h-screen w-screen flex items-center justify-center">
-			<div className="text-5xl">HackByte</div>
-		</main>
+		<>
+			<header>
+				<Navbar />
+			</header>
+			<main className="bg-background h-screen w-screen flex items-center justify-center">
+				<div className="text-5xl">HackByte</div>
+			</main>
+		</>
 	);
 }
