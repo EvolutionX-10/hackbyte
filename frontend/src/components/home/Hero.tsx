@@ -5,14 +5,8 @@ import { BorderBeam } from "../magicui/border-beam";
 import { TypingAnimation } from "../magicui/typing-animation";
 
 const Hero: React.FC = () => {
-	const [activeTab, setActiveTab] = useState("simulate");
 	const [animateNumber, setAnimateNumber] = useState(0);
 	const targetNumber = 10000;
-	const tabContent = {
-		simulate: "Test your strategies without risking real money",
-		trade: "Execute trades with confidence and precision",
-		learn: "Master investing through interactive guides",
-	};
 
 	// Number animation effect
 	useEffect(() => {
@@ -31,15 +25,13 @@ const Hero: React.FC = () => {
 			<div className="container px-4 flex flex-col items-center mx-auto space-y-12 md:space-y-16">
 				<div className="relative overflow-hidden max-w-xs sm:max-w-sm rounded-full">
 					<div className="flex items-center justify-center gap-2 sm:gap-3 px-5 sm:px-7 py-2 rounded-full border border-lime-50/50 text-base sm:text-xl font-semibold">
-						{["simulate", "trade", "learn"].map((tab) => (
-							<button
-								key={tab}
-								onClick={() => setActiveTab(tab)}
-								className={`transition-all duration-300 ${activeTab === tab ? "text-lime-400" : ""}`}
-							>
-								{tab} 
-							</button>
-						))}
+						<div className="flex items-center gap-2 sm:gap-3">
+							<span>simulate</span>
+							<span>•</span>
+							<span>trade</span>
+							<span>•</span>
+							<span>learn</span>
+						</div>
 					</div>
 					<BorderBeam duration={6} size={80} className="from-transparent via-lime-500 to-transparent" />
 				</div>
@@ -54,7 +46,7 @@ const Hero: React.FC = () => {
 					</h1>
 
 					<p className="text-lg sm:text-xl text-gray-300 max-w-xl mx-auto mb-8 transition-opacity duration-500">
-						{tabContent[activeTab as keyof typeof tabContent]}
+						Master investing through interactive guides
 					</p>
 				</div>
 
