@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from model import CTTS  # Your custom model
 
 # 🛠 Hyperparameters
-SEQ_LENGTH = 300
+SEQ_LENGTH = 120
 BATCH_SIZE = 32
 EPOCHS = 100
 LEARNING_RATE = 0.00001
@@ -23,7 +23,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 def load_and_prepare_data(filepath):
     df = pd.read_csv(filepath)
-    df.drop(columns=['Datetime'], axis = 1,inplace=True)
+    df.drop(columns=['Date'], axis = 1,inplace=True)
     FEATURES = df.columns.tolist()   
     # df = df[FEATURES]
     print(FEATURES)
