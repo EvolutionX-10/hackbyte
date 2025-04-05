@@ -141,6 +141,7 @@ export function generateLevelSpecificPrompt(
 
 	// Add language-specific instruction
 	prompt += languagePrompts[language];
-
+	console.log("Final Prompt");
+	console.log(prompt);
 	return prompt;
 }

@@ -34,7 +34,9 @@ export function ResultsScreen({ score, totalQuestions, onRestartAction }: Result
 			toast.error("Failed to assign level");
 		} else {
 			toast.success("Level assigned successfully");
-			router.replace("/learn");
+			setTimeout(() => {
+				window.location.reload();
+			}, 500);
 		}
 	}
 

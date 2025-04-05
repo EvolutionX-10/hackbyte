@@ -32,7 +32,7 @@ async function generateLearningTrack(
 	// Configure model settings based on knowledge level
 	const modelConfig = {
 		// Less creativity for beginners for clearer explanations
-		temperature: level === KnowledgeLevel.BEGINNER ? 0.5 : level === KnowledgeLevel.INTERMEDIATE ? 0.65 : 0.75,
+		temperature: level === KnowledgeLevel.BEGINNER ? 0.1 : level === KnowledgeLevel.INTERMEDIATE ? 0.65 : 0.75,
 		maxOutputTokens: 4096, // Allow more detailed content
 	};
 
@@ -46,7 +46,7 @@ async function generateLearningTrack(
 			model,
 			prompt,
 			maxTokens: 4096,
-			temperature: modelConfig.temperature,
+			temperature: 0,
 		});
 
 		// Extract JSON from response (in case there's additional text)

@@ -5,7 +5,7 @@ export const genAI = createGoogleGenerativeAI();
 
 // Helper function to create a model instance with optional custom configuration
 export function createModel(customConfig = {}) {
-	return genAI("gemini-2.5-pro-exp-03-25", {
+	return genAI("gemini-2.0-flash-001", {
 		...customConfig,
 	});
 }
