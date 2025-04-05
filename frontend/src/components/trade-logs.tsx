@@ -52,7 +52,7 @@ const TradeLogItem = ({ log }: { log: TradeLog }) => {
 	const { icon, bgColor, textColor } = getActionDetails(log.action);
 
 	return (
-		<div className="bg-[#1e1f25] rounded-lg p-4 mb-3 border-l-4 border-[#2e2f36] hover:border-l-blue-500 transition-all">
+		<div className="bg-zinc-200 dark:bg-[#1e1f25] rounded-lg p-4 mb-3 border-l-4 border-[#2e2f36] hover:border-l-blue-500 transition-all">
 			<div className="flex justify-between items-center">
 				<div className="flex items-center gap-3">
 					<div className={`h-10 w-10 rounded-full ${bgColor} flex items-center justify-center`}>{icon}</div>
@@ -82,7 +82,7 @@ const TradeLogItem = ({ log }: { log: TradeLog }) => {
 // TradeLogs.tsx
 const TradeLogs = ({ logs }: TradeLogsProps) => {
 	return (
-		<div className="bg-[#1c1d23] h-screen rounded-lg p-4 overflow-hidden flex flex-col">
+		<div className="bg-secondary h-screen rounded-lg p-4 overflow-hidden flex flex-col">
 			<div className="flex justify-between items-center mb-4">
 				<div className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-xs font-medium">Live Trading</div>
 				<div className="text-gray-400 text-sm">{logs.length} actions today</div>
@@ -98,7 +98,7 @@ const TradeLogs = ({ logs }: TradeLogsProps) => {
 
 			<style jsx>{`
 				.custom-scrollbar::-webkit-scrollbar {
-					width: 6px;
+					width: 4px;
 				}
 				.custom-scrollbar::-webkit-scrollbar-track {
 					background: #1c1d23;

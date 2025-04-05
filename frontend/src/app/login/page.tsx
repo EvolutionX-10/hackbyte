@@ -38,7 +38,7 @@ export default function LoginPage() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
-			<form onSubmit={handleLogin} className="w-full max-w-sm p-6 bg-card rounded shadow-md">
+			<form onSubmit={handleLogin} className="w-full max-w-sm p-6 bg-secondary rounded shadow-md">
 				<h1 className="mb-6 text-2xl font-bold text-center text-foreground">Login</h1>
 				{error && <p className="mb-4 text-sm text-destructive">{error}</p>}
 				{success && <p className="mb-4 text-sm text-primary">{success}</p>}

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { ColorType, createChart, CandlestickSeries, IChartApi, Time, CrosshairMode } from "lightweight-charts";
+import { useTheme } from "next-themes";
 
 // Type definition for the data received from WebSocket
 interface StockDataPoint {
@@ -26,7 +27,7 @@ interface CandlestickData {
 	close: number;
 }
 
-const Chart = () => {
+const Chart: React.FC = () => {
 	const chartContainerRef = useRef<HTMLDivElement>(null);
 	const tooltipRef = useRef<HTMLDivElement>(null);
 	const chartRef = useRef<IChartApi | null>(null);
@@ -51,16 +52,22 @@ const Chart = () => {
 			close: parseFloat(data.Close),
 		};
 	};
-
+	
+	const { resolvedTheme: theme } = useTheme();
+	
 	useEffect(() => {
 		// Initialize chart
 		console.log(window);
 		if (!chartContainerRef.current) return;
 
+
 		const chart = createChart(chartContainerRef.current, {
 			layout: {
-				background: { type: ColorType.Solid, color: "#1f2228" }, // Dark background (zinc-950)
-				textColor: "#e4e4e7", // Light text (zinc-200)
+				background: {
+					type: ColorType.Solid,
+					color: theme === "dark" ? "#1f2228" : "#f9fafb", // Dark background for dark theme, white for light theme
+				},
+				textColor: theme === "dark" ? "#e4e4e7" : "#141414", // Light text for dark theme, black for light theme
 				fontFamily: "'Courier New', -apple-system, BlinkMacSystemFont, sans-serif",
 				attributionLogo: false,
 			},
@@ -85,15 +92,15 @@ const Chart = () => {
 				mode: CrosshairMode.Normal,
 				vertLine: {
 					color: "rgba(255, 255, 255, 0.2)",
-					labelBackgroundColor: "#27272a", // zinc-800
+					labelBackgroundColor: theme === "dark" ? "#27272a" : "#e4e4e7", // zinc-800 for dark, light for light theme
 				},
 				horzLine: {
 					color: "rgba(255, 255, 255, 0.2)",
-					labelBackgroundColor: "#27272a", // zinc-800
+					labelBackgroundColor: theme === "dark" ? "#27272a" : "#e4e4e7", // zinc-800 for dark, light for light theme
 				},
 			},
 			width: chartContainerRef.current.clientWidth,
-			height: 584,
+			height: 494,
 			handleScale: {
 				axisPressedMouseMove: true,
 			},
@@ -116,8 +123,6 @@ const Chart = () => {
 				minMove: 0.01,
 			},
 		});
-
-		// Removed sample data initialization which was causing time format conflicts
 
 		// Configure tooltip to display OHLC values
 		chart.subscribeCrosshairMove((param) => {
@@ -227,10 +232,10 @@ const Chart = () => {
 
 	return (
 		<div className="relative w-full">
-			<div className="rounded-xl border border-zinc-800 bg-[#1f2228] overflow-hidden shadow-lg">
+			<div className="rounded-xl border border-zinc-800 bg-secondary overflow-hidden shadow-lg">
 				{/* Status indicator - consistent positioning on right side for both states */}
 				<div
-					className={`absolute left-3 top-3 flex items-center bg-zinc-800 text-white px-2 py-1 rounded-full text-xs z-10`}
+					className={`absolute left-3 top-3 flex items-center bg-white dark:bg-zinc-800 text-foreground px-2 py-1 rounded-full text-xs z-10`}
 				>
 					<span className={`h-2 w-2 rounded-full ${isConnected ? "bg-green-500" : "bg-red-500"} mr-1.5`}></span>
 					<span className="font-medium">{isConnected ? "Live" : "Disconnected"}</span>
@@ -242,7 +247,7 @@ const Chart = () => {
 				{/* Custom tooltip - using ref instead of querySelector */}
 				<div
 					ref={tooltipRef}
-					className="absolute pointer-events-none bg-zinc-800 rounded-lg shadow-lg text-white opacity-0 transition-opacity duration-150 z-20"
+					className="absolute pointer-events-none bg-white dark:bg-zinc-800 rounded-lg shadow-lg text-foreground opacity-0 transition-opacity duration-150 z-20"
 					style={{
 						top: "10px",
 						left: "10px",
