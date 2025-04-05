@@ -20,6 +20,18 @@ export enum FinanceTopics {
 	ADVANCED_TRADING = "Advanced Trading Strategies",
 }
 
+// Available languages for content generation
+export enum ContentLanguage {
+	ENGLISH = "English",
+	SPANISH = "Spanish",
+	FRENCH = "French",
+	GERMAN = "German",
+	CHINESE = "Chinese",
+	JAPANESE = "Japanese",
+	HINDI = "Hindi",
+	ARABIC = "Arabic",
+}
+
 // Learning progress tracking type
 export type LearningProgress = {
 	userId: string;

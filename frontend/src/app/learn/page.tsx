@@ -12,8 +12,9 @@ import { LearningTrack, generateLearningTrack } from "@/lib/ai";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
-import { FinanceTopics } from "@/lib/ai-config";
+import { ContentLanguage, FinanceTopics } from "@/lib/ai-config";
 import { TopicSelector } from "@/components/topic-selector";
+import { LanguageSelector } from "@/components/language-selector";
 
 export default function LearnPage() {
 	const { jwt } = useAuth();
@@ -22,7 +23,9 @@ export default function LearnPage() {
 	const [loading, setLoading] = useState(true);
 	const [learningTrack, setLearningTrack] = useState<LearningTrack | null>(null);
 	const [selectedTopic, setSelectedTopic] = useState<FinanceTopics | null>(null);
+	const [selectedLanguage, setSelectedLanguage] = useState<ContentLanguage>(ContentLanguage.ENGLISH);
 	const [showTopicSelector, setShowTopicSelector] = useState(false);
+	const [showLanguageSelector, setShowLanguageSelector] = useState(false);
 	const [progress, setProgress] = useState(0);
 	const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 	const loadingStageRef = useRef<string>("initial");
@@ -108,10 +111,11 @@ export default function LearnPage() {
 		}
 	}
 
-	async function fetchLearningTrack(level: KnowledgeLevel, topic?: FinanceTopics) {
+	async function fetchLearningTrack(level: KnowledgeLevel, topic?: FinanceTopics, language?: ContentLanguage) {
 		try {
 			setLoading(true);
 			setShowTopicSelector(false);
+			setShowLanguageSelector(false);
 
 			// Start loading animation (0% to 30%)
 			startProgressAnimation(0, 30, 1500, "prepare-content");
@@ -123,8 +127,11 @@ export default function LearnPage() {
 				}
 			}, 1500);
 
-			// Generate learning track content based on user level and optional topic
-			const track = await generateLearningTrack(level, topic);
+			// Use provided language or fall back to selected language
+			const contentLanguage = language || selectedLanguage;
+
+			// Generate learning track content based on user level, optional topic, and language
+			const track = await generateLearningTrack(level, topic, contentLanguage);
 
 			// Smoothly finish the loading animation (current % to 100%)
 			const currentValue = loadingStageRef.current === "generating-content" ? Math.min(progress, 70) : 30;
@@ -136,6 +143,7 @@ export default function LearnPage() {
 
 			setLearningTrack(track);
 			setSelectedTopic(topic || null);
+			setSelectedLanguage(contentLanguage);
 		} catch (error) {
 			console.error("Error generating learning track:", error);
 			toast.error("Failed to load learning content");
@@ -151,6 +159,12 @@ export default function LearnPage() {
 	function handleTopicChange(topic: FinanceTopics | undefined) {
 		if (knowledge) {
 			fetchLearningTrack(knowledge, topic);
+		}
+	}
+
+	function handleLanguageChange(language: ContentLanguage) {
+		if (knowledge) {
+			fetchLearningTrack(knowledge, selectedTopic || undefined, language);
 		}
 	}
 
@@ -212,10 +226,15 @@ export default function LearnPage() {
 							<p className="text-muted-foreground">
 								Customized finance education for your {knowledge.toLowerCase()} level
 								{selectedTopic && ` - ${selectedTopic}`}
+								{selectedLanguage !== ContentLanguage.ENGLISH && ` in ${selectedLanguage}`}
 							</p>
 						</div>
 
 						<div className="flex gap-3 mt-2 sm:mt-0">
+							<Button variant="outline" onClick={() => setShowLanguageSelector(!showLanguageSelector)}>
+								{showLanguageSelector ? "Hide Languages" : "Change Language"}
+							</Button>
+
 							<Button variant="outline" onClick={() => setShowTopicSelector(!showTopicSelector)}>
 								{showTopicSelector ? "Hide Topics" : "Change Topic"}
 							</Button>
@@ -225,6 +244,10 @@ export default function LearnPage() {
 							</Button>
 						</div>
 					</div>
+
+					{showLanguageSelector && (
+						<LanguageSelector selectedLanguage={selectedLanguage} onSelect={handleLanguageChange} />
+					)}
 
 					{showTopicSelector && <TopicSelector selectedTopic={selectedTopic} onSelect={handleTopicChange} />}
 
