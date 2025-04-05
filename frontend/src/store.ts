@@ -18,6 +18,6 @@ export const useAuth = create<UserStore>()(
 		}),
 		{
 			name: "auth-storage",
-		}
-	)
+		},
+	),
 );

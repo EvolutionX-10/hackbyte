@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Auth from "@/lib/auth";
 import { useAuth } from "@/store";
+import { toast } from "sonner";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -27,8 +28,11 @@ export default function LoginPage() {
 				setLocalEmail(email);
 				setJwt(response.token);
 				router.push("/learn");
+				toast("Login successful");
+				return;
 			}
 			setSuccess(response.message);
+			toast("Login failed");
 		} catch (err: any) {
 			setError(err.message);
 		} finally {
