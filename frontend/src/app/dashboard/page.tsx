@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Chart from "@/components/chart";
-import TradeLogs from "@/components/trade-logs";
+
 import PerformanceMetrics from "@/components/metrics";
+import TradeLogs from "@/components/trade-logs";
 
 type ActionType = "BUY" | "SELL" | "HOLD" | "SHORT";
 
@@ -62,6 +63,128 @@ const mockLogs: TradeLog[] = [
 	},
 ];
 
+// export default function Home() {
+// 	const [hasMounted, setHasMounted] = useState(false);
+// 	const [logs, setLogs] = useState<TradeLog[]>(mockLogs);
+// 	const [metrics, setMetrics] = useState({
+// 		cumulativeProfitLoss: 3625.75,
+// 		winRate: 68,
+// 		totalTrades: 42,
+// 		averageProfit: 485.32,
+// 		averageLoss: 217.65,
+// 		largestWin: 1250.4,
+// 		largestLoss: 675.2,
+// 	});
+
+// 	// Simulate real-time updates from WebSocket
+// 	useEffect(() => {
+// 		// In a real implementation, this would be a WebSocket connection
+// 		setHasMounted(true);
+// 		const interval = setInterval(() => {
+// 			// Use properly typed actions array
+// 			const actions: ActionType[] = ["BUY", "SELL", "HOLD", "SHORT"];
+// 			const randomAction = actions[Math.floor(Math.random() * actions.length)];
+// 			const basePrice = 2450;
+// 			const randomPrice = basePrice + (Math.random() * 20 - 10);
+// 			const randomQuantity = Math.floor(Math.random() * 15) + 1;
+
+// 			// Generate random profit/loss for SELL and SHORT actions
+// 			const randomProfitLoss =
+// 				randomAction === "SELL" || randomAction === "SHORT" ? Math.random() * 400 - 200 : undefined;
+
+// 			const newLog: TradeLog = {
+// 				id: Date.now().toString(),
+// 				timestamp: new Date(),
+// 				action: randomAction,
+// 				price: randomPrice,
+// 				quantity: randomQuantity,
+// 				value: randomPrice * randomQuantity,
+// 				profitLoss: randomProfitLoss,
+// 			};
+
+// 			setLogs((prevLogs) => [newLog, ...prevLogs.slice(0, 49)]); // Keep last 50 logs
+
+// 			// Update metrics when there's a profit/loss value
+// 			if (randomProfitLoss !== undefined) {
+// 				setMetrics((prev) => {
+// 					const newCumulativePL = prev.cumulativeProfitLoss + randomProfitLoss;
+// 					const newTotalTrades = prev.totalTrades + 1;
+
+// 					// Calculate new win rate
+// 					const isWin = randomProfitLoss > 0;
+// 					const currentWins = Math.round((prev.winRate * prev.totalTrades) / 100);
+// 					const newWins = isWin ? currentWins + 1 : currentWins;
+// 					const newWinRate = Math.round((newWins / newTotalTrades) * 100);
+
+// 					// Update average profit/loss
+// 					const newAvgProfit = isWin
+// 						? (prev.averageProfit * currentWins + randomProfitLoss) / newWins
+// 						: prev.averageProfit;
+
+// 					const currentLosses = prev.totalTrades - currentWins;
+// 					const newLosses = isWin ? currentLosses : currentLosses + 1;
+// 					const newAvgLoss =
+// 						!isWin && newLosses > 0
+// 							? (prev.averageLoss * currentLosses + Math.abs(randomProfitLoss)) / newLosses
+// 							: prev.averageLoss;
+
+// 					// Update best/worst trades
+// 					const newLargestWin = isWin ? Math.max(prev.largestWin, randomProfitLoss) : prev.largestWin;
+
+// 					const newLargestLoss = !isWin ? Math.max(prev.largestLoss, Math.abs(randomProfitLoss)) : prev.largestLoss;
+
+// 					return {
+// 						cumulativeProfitLoss: newCumulativePL,
+// 						winRate: newWinRate,
+// 						totalTrades: newTotalTrades,
+// 						averageProfit: newAvgProfit,
+// 						averageLoss: newAvgLoss,
+// 						largestWin: newLargestWin,
+// 						largestLoss: newLargestLoss,
+// 					};
+// 				});
+// 			}
+// 		}, 10000); // New log every 30 seconds
+
+// 		return () => clearInterval(interval);
+// 	}, []);
+
+// 	return (
+// 		<div className="min-h-screen bg-[#17181c] flex items-center justify-center text-white">
+// 			<div className="p-8 flex flex-col w-full">
+// 				<div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-8">
+// 					<div className="w-full lg:w-2/3">
+// 						<div className="flex justify-between items-center mb-4">
+// 							<h1 className="text-2xl font-bold font-sans">Reliance Stock Data</h1>
+// 							<div className="bg-green-500/10 text-green-500 py-1 px-3 rounded-full text-xs font-medium">
+// 								Live Trading
+// 							</div>
+// 						</div>
+// 						<Chart />
+
+// 						{/* Performance Metrics Panel */}
+// 						<PerformanceMetrics
+// 							cumulativeProfitLoss={metrics.cumulativeProfitLoss}
+// 							winRate={metrics.winRate}
+// 							totalTrades={metrics.totalTrades}
+// 							averageProfit={metrics.averageProfit}
+// 							averageLoss={metrics.averageLoss}
+// 							largestWin={metrics.largestWin}
+// 							largestLoss={metrics.largestLoss}
+// 						/>
+// 					</div>
+
+// 					<div className="w-full h-full lg:w-1/3">
+// 						<h1 className="text-2xl font-bold mb-4 font-sans">Logs</h1>
+// 						{hasMounted ? <TradeLogs logs={logs} /> : null}
+// 					</div>
+// 				</div>
+// 			</div>
+// 		</div>
+// 	);
+// }
+
+// Home.tsx
 export default function Home() {
 	const [logs, setLogs] = useState<TradeLog[]>(mockLogs);
 	const [metrics, setMetrics] = useState({
@@ -74,18 +197,13 @@ export default function Home() {
 		largestLoss: 675.2,
 	});
 
-	// Simulate real-time updates from WebSocket
 	useEffect(() => {
-		// In a real implementation, this would be a WebSocket connection
 		const interval = setInterval(() => {
-			// Use properly typed actions array
 			const actions: ActionType[] = ["BUY", "SELL", "HOLD", "SHORT"];
 			const randomAction = actions[Math.floor(Math.random() * actions.length)];
 			const basePrice = 2450;
 			const randomPrice = basePrice + (Math.random() * 20 - 10);
 			const randomQuantity = Math.floor(Math.random() * 15) + 1;
-
-			// Generate random profit/loss for SELL and SHORT actions
 			const randomProfitLoss =
 				randomAction === "SELL" || randomAction === "SHORT" ? Math.random() * 400 - 200 : undefined;
 
@@ -99,35 +217,26 @@ export default function Home() {
 				profitLoss: randomProfitLoss,
 			};
 
-			setLogs((prevLogs) => [newLog, ...prevLogs.slice(0, 49)]); // Keep last 50 logs
+			setLogs((prevLogs) => [newLog, ...prevLogs.slice(0, 49)]);
 
-			// Update metrics when there's a profit/loss value
 			if (randomProfitLoss !== undefined) {
 				setMetrics((prev) => {
 					const newCumulativePL = prev.cumulativeProfitLoss + randomProfitLoss;
 					const newTotalTrades = prev.totalTrades + 1;
-
-					// Calculate new win rate
 					const isWin = randomProfitLoss > 0;
 					const currentWins = Math.round((prev.winRate * prev.totalTrades) / 100);
 					const newWins = isWin ? currentWins + 1 : currentWins;
 					const newWinRate = Math.round((newWins / newTotalTrades) * 100);
-
-					// Update average profit/loss
 					const newAvgProfit = isWin
 						? (prev.averageProfit * currentWins + randomProfitLoss) / newWins
 						: prev.averageProfit;
-
 					const currentLosses = prev.totalTrades - currentWins;
 					const newLosses = isWin ? currentLosses : currentLosses + 1;
 					const newAvgLoss =
 						!isWin && newLosses > 0
 							? (prev.averageLoss * currentLosses + Math.abs(randomProfitLoss)) / newLosses
 							: prev.averageLoss;
-
-					// Update best/worst trades
 					const newLargestWin = isWin ? Math.max(prev.largestWin, randomProfitLoss) : prev.largestWin;
-
 					const newLargestLoss = !isWin ? Math.max(prev.largestLoss, Math.abs(randomProfitLoss)) : prev.largestLoss;
 
 					return {
@@ -141,37 +250,42 @@ export default function Home() {
 					};
 				});
 			}
-		}, 10000); // New log every 30 seconds
-
+		}, 10000);
 		return () => clearInterval(interval);
 	}, []);
 
 	return (
-		<div className="h-screen w-screen bg-[#17181c] flex items-center justify-center text-white overflow-auto">
-			<div className="p-8 flex flex-col w-full">
-				<div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-12">
-					<div className="w-full lg:w-2/3">
-						<div className="flex justify-between items-center mb-4">
-							<h1 className="text-2xl font-bold font-sans">Reliance Stock Data</h1>
-							<div className="bg-green-500/10 text-green-500 py-1 px-3 rounded-full text-xs font-medium">
-								Live Trading
+		<div className="min-h-screen bg-[#17181c] flex items-center justify-center text-white">
+			<div className="p-8 w-full max-w-[1400px]">
+				<div className="flex flex-col lg:flex-row w-full gap-6 lg:gap-8">
+					{/* Chart and Metrics Container */}
+					<div className="w-full lg:w-2/3 flex flex-col">
+						<div className="mb-4">
+							<div className="flex justify-between items-center">
+								<h1 className="text-2xl font-bold font-sans">Reliance Stock Data</h1>
+								<div className="bg-green-500/10 text-green-500 py-1 px-3 rounded-full text-xs font-medium">
+									Live Trading
+								</div>
 							</div>
 						</div>
-						<Chart />
-
-						{/* Performance Metrics Panel */}
-						<PerformanceMetrics
-							cumulativeProfitLoss={metrics.cumulativeProfitLoss}
-							winRate={metrics.winRate}
-							totalTrades={metrics.totalTrades}
-							averageProfit={metrics.averageProfit}
-							averageLoss={metrics.averageLoss}
-							largestWin={metrics.largestWin}
-							largestLoss={metrics.largestLoss}
-						/>
+						<div className="flex-grow mb-4">
+							<Chart />
+						</div>
+						<div>
+							<PerformanceMetrics
+								cumulativeProfitLoss={metrics.cumulativeProfitLoss}
+								winRate={metrics.winRate}
+								totalTrades={metrics.totalTrades}
+								averageProfit={metrics.averageProfit}
+								averageLoss={metrics.averageLoss}
+								largestWin={metrics.largestWin}
+								largestLoss={metrics.largestLoss}
+							/>
+						</div>
 					</div>
 
-					<div className="w-full lg:w-1/3">
+					{/* Logs Container */}
+					<div className="w-full lg:w-1/3 lg:h-full overflow-hidden">
 						<h1 className="text-2xl font-bold mb-4 font-sans">Logs</h1>
 						<TradeLogs logs={logs} />
 					</div>

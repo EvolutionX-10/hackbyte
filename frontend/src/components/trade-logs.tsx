@@ -79,10 +79,10 @@ const TradeLogItem = ({ log }: { log: TradeLog }) => {
 		</div>
 	);
 };
-
+// TradeLogs.tsx
 const TradeLogs = ({ logs }: TradeLogsProps) => {
 	return (
-		<div className="bg-[#1c1d23] h-[calc(100vh-120px)] rounded-lg p-4 overflow-hidden flex flex-col">
+		<div className="bg-[#1c1d23] h-screen rounded-lg p-4 overflow-hidden flex flex-col">
 			<div className="flex justify-between items-center mb-4">
 				<div className="bg-blue-500/10 text-blue-500 py-1 px-3 rounded-full text-xs font-medium">Live Trading</div>
 				<div className="text-gray-400 text-sm">{logs.length} actions today</div>
