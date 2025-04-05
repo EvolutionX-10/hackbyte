@@ -54,6 +54,7 @@ const Chart = () => {
 
 	useEffect(() => {
 		// Initialize chart
+		console.log(window);
 		if (!chartContainerRef.current) return;
 
 		const chart = createChart(chartContainerRef.current, {
@@ -61,7 +62,7 @@ const Chart = () => {
 				background: { type: ColorType.Solid, color: "#1f2228" }, // Dark background (zinc-950)
 				textColor: "#e4e4e7", // Light text (zinc-200)
 				fontFamily: "'Courier New', -apple-system, BlinkMacSystemFont, sans-serif",
-				attributionLogo: false
+				attributionLogo: false,
 			},
 			grid: {
 				vertLines: { color: "rgba(161, 161, 170, 0.06)" }, // Very subtle grid (zinc-500 with low opacity)

@@ -63,7 +63,6 @@ const mockLogs: TradeLog[] = [
 ];
 
 export default function Home() {
-	const [hasMounted, setHasMounted] = useState(false);
 	const [logs, setLogs] = useState<TradeLog[]>(mockLogs);
 	const [metrics, setMetrics] = useState({
 		cumulativeProfitLoss: 3625.75,
@@ -78,7 +77,6 @@ export default function Home() {
 	// Simulate real-time updates from WebSocket
 	useEffect(() => {
 		// In a real implementation, this would be a WebSocket connection
-		setHasMounted(true);
 		const interval = setInterval(() => {
 			// Use properly typed actions array
 			const actions: ActionType[] = ["BUY", "SELL", "HOLD", "SHORT"];
@@ -175,7 +173,7 @@ export default function Home() {
 
 					<div className="w-full lg:w-1/3">
 						<h1 className="text-2xl font-bold mb-4 font-sans">Logs</h1>
-						{hasMounted ? <TradeLogs logs={logs} /> : null}
+						<TradeLogs logs={logs} />
 					</div>
 				</div>
 			</div>
