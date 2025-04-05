@@ -38,7 +38,7 @@ export default function SignUpPage() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-background">
-			<form onSubmit={handleSignUp} className="w-full max-w-sm p-6 bg-card rounded shadow-md">
+			<form onSubmit={handleSignUp} className="w-full max-w-sm p-6 bg-secondary rounded shadow-md">
 				<h1 className="mb-6 text-2xl font-bold text-center text-foreground">Sign Up</h1>
 				{error && <p className="mb-4 text-sm text-destructive">{error}</p>}
 				{success && <p className="mb-4 text-sm text-primary">{success}</p>}
