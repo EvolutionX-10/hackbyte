@@ -4,3 +4,5 @@ hackbyte/
 data/
 __pycache__/
 models/
+*.log
+*.pth
