@@ -52,14 +52,13 @@ const Chart: React.FC = () => {
 			close: parseFloat(data.Close),
 		};
 	};
-	
+
 	const { resolvedTheme: theme } = useTheme();
-	
+
 	useEffect(() => {
 		// Initialize chart
 		console.log(window);
 		if (!chartContainerRef.current) return;
-
 
 		const chart = createChart(chartContainerRef.current, {
 			layout: {
