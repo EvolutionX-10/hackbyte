@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
 			},
 			{
 				status: 401,
-			}
+			},
 		);
 	}
 	const prisma = new PrismaClient();
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 				},
 				{
 					status: 401,
-				}
+				},
 			);
 		}
 
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 			},
 			{
 				status: 200,
-			}
+			},
 		);
 	});
 	return resp;

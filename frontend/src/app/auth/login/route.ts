@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 				email,
 				password: hashedPassword,
 			},
-			process.env.JWT_SECRET!
+			process.env.JWT_SECRET!,
 		);
 
 		return NextResponse.json({ success: true, message: "Login successful", token: jwt }, { status: 200 });
