@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Urbanist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Hydrate from "@/components/hydrate";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
+	subsets: ["latin"],
+});
+
+const urbanist = Urbanist({
+	variable: "--font-urbanist",
 	subsets: ["latin"],
 });
 
@@ -26,7 +31,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+			<body className={`${geistSans.variable} ${geistMono.variable} ${urbanist.variable} font-sans antialiased`}>
 				<Hydrate>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						{children}

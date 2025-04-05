@@ -1,15 +1,17 @@
-"use client";
-
 import Chart from "@/components/chart";
-import { useEffect, useState } from "react";
 
 export default function Home() {
 	return (
-		<div className="h-screen w-screen flex items-center justify-center">
-			<div className="p-8 w-full">
-				<h1 className="text-2xl font-bold mb-4">Reliance Stock Data</h1>
-				<Chart />
-			</div>
-		</div>
-	);
+        <div className="h-screen w-screen bg-[#17181c]">
+            <div className="p-8 flex w-full gap-20">
+                <div className="w-2/3">
+                    <h1 className="text-2xl font-bold mb-4 font-sans">Reliance Stock Data</h1>
+                    <Chart />
+                </div>
+                <div className="w-1/3">
+                    <span>Hi</span>
+                </div>
+            </div>
+        </div>
+    );
 }
