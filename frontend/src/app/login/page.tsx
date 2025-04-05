@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import Auth from "@/lib/auth";
+import { useAuth } from "@/store";
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -13,6 +14,7 @@ export default function LoginPage() {
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
 	const [loading, setLoading] = useState(false);
+	const { setEmail: setLocalEmail, setJwt } = useAuth();
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -21,8 +23,12 @@ export default function LoginPage() {
 		setLoading(true);
 		try {
 			const response = await Auth.login(email, password);
+			if (response.success) {
+				setLocalEmail(email);
+				setJwt(response.token);
+				router.push("/learn");
+			}
 			setSuccess(response.message);
-			router.push("/dashboard");
 		} catch (err: any) {
 			setError(err.message);
 		} finally {

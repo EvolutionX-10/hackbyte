@@ -3,14 +3,18 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import Auth from "@/lib/auth";
+import { useAuth } from "@/store";
 
 export default function SignUpPage() {
+	const router = useRouter();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const [success, setSuccess] = useState("");
 	const [loading, setLoading] = useState(false);
+	const { setEmail: setLocalEmail, setJwt } = useAuth();
 
 	const handleSignUp = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -19,6 +23,11 @@ export default function SignUpPage() {
 		setLoading(true);
 		try {
 			const response = await Auth.signup(email, password);
+			if (response.success) {
+				setLocalEmail(email);
+				setJwt(response.token);
+				router.push("/");
+			}
 			setSuccess(response.message);
 		} catch (err: any) {
 			setError(err.message);
