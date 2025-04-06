@@ -11,11 +11,11 @@ interface TopicSelectorProps {
 
 export function TopicSelector({ selectedTopic, onSelect }: TopicSelectorProps) {
 	return (
-		<Card>
+		<Card className="bg-[#1c1d23] border-gray-700">
 			<CardContent className="pt-6">
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center justify-between">
-						<h3 className="text-lg font-medium">Choose a Learning Topic</h3>
+						<h3 className="text-lg font-medium text-gray-100">Choose a Learning Topic</h3>
 						{selectedTopic && (
 							<button
 								onClick={() => onSelect(undefined)}
@@ -38,8 +38,8 @@ export function TopicSelector({ selectedTopic, onSelect }: TopicSelectorProps) {
 								key={topic}
 								className={`flex items-center space-x-2 border rounded-lg p-4 cursor-pointer ${
 									selectedTopic === topic
-										? "border-primary bg-primary/5"
-										: "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900"
+										? "border-blue-500 bg-blue-500/20"
+										: "border-gray-700 hover:bg-gray-800"
 								}`}
 								onClick={() => onSelect(topic)}
 							>

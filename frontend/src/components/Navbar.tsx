@@ -38,7 +38,7 @@ const Navbar = () => {
 	];
 
 	return (
-		<nav className="bg-background border-b border-lime-50 h-16 w-full px-8 py-4">
+		<nav className="bg-background/10 backdrop-blur-3xl border-b border-lime-50 h-16 w-full px-8 py-4">
 			<div className="flex items-center justify-between h-full w-full">
 				<Link href="/">
 					<div className="left flex items-center gap-4">

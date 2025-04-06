@@ -146,17 +146,17 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 				</div>
 			</div>
 
-			<Card>
+			<Card className="bg-[#1c1d23] border-[#2a2b33]">
 				<CardHeader>
 					<div className="flex justify-between items-center">
 						<div>
-							<CardTitle className="text-xl">{currentSection.title}</CardTitle>
-							<CardDescription>
+							<CardTitle className="text-xl text-white">{currentSection.title}</CardTitle>
+							<CardDescription className="text-gray-400">
 								Section {activeSection + 1} of {track.sections.length}
 							</CardDescription>
 						</div>
 						{completedSections.includes(activeSection) && (
-							<Badge variant="outline" className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+							<Badge variant="outline" className="bg-green-900/20 text-green-300 border-green-700">
 								Completed
 							</Badge>
 						)}
@@ -164,11 +164,13 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 				</CardHeader>
 
 				<CardContent>
-					<Tabs value={activeTab} onValueChange={setActiveTab}>
-						<TabsList className="mb-4">
-							<TabsTrigger value="content">Learn</TabsTrigger>
+					<Tabs value={activeTab} onValueChange={setActiveTab} className="text-gray-200">
+						<TabsList className="mb-4 bg-[#252630]">
+							<TabsTrigger value="content" className="data-[state=active]:bg-[#2a2c36] data-[state=active]:text-white">
+								Learn
+							</TabsTrigger>
 							{currentSection.quiz && currentSection.quiz.length > 0 && (
-								<TabsTrigger value="quiz">
+								<TabsTrigger value="quiz" className="data-[state=active]:bg-[#2a2c36] data-[state=active]:text-white">
 									Quiz
 									{showResults && quizAnswers[`${activeSection}-0`] !== undefined && (
 										<span className="ml-2 w-2 h-2 rounded-full bg-green-500"></span>
@@ -179,13 +181,13 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 
 						<TabsContent value="content">
 							<div className="space-y-4">
-								<div className="prose dark:prose-invert max-w-none">
+								<div className="prose dark:prose-invert text-gray-200 max-w-none">
 									{/* Use dangerouslySetInnerHTML to render markdown content */}
 									<div
 										dangerouslySetInnerHTML={{
 											__html: currentSection.content
-												.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-												.replace(/\*(.*?)\*/g, "<em>$1</em>")
+												.replace(/\*\*(.*?)\*\*/g, "<strong class='text-white'>$1</strong>")
+												.replace(/\*(.*?)\*/g, "<em class='text-gray-300'>$1</em>")
 												.replace(/\n/g, "<br />"),
 										}}
 									/>
@@ -197,7 +199,7 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 							<TabsContent value="quiz" className="space-y-6">
 								{currentSection.quiz.map((quizItem, questionIndex) => (
 									<div key={questionIndex} className="space-y-4">
-										<h3 className="text-lg font-medium">{quizItem.question}</h3>
+										<h3 className="text-lg font-medium text-white">{quizItem.question}</h3>
 
 										<RadioGroup
 											value={quizAnswers[`${activeSection}-${questionIndex}`]?.toString()}
@@ -209,11 +211,11 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 													className={`flex items-center space-x-2 p-3 border rounded-md ${
 														showResults
 															? optionIndex === quizItem.answerIndex
-																? "bg-green-100 dark:bg-green-900/30 border-green-300 dark:border-green-800"
+																? "bg-green-900/30 border-green-700 text-green-200"
 																: quizAnswers[`${activeSection}-${questionIndex}`] === optionIndex
-																? "bg-red-100 dark:bg-red-900/30 border-red-300 dark:border-red-800"
-																: "border-gray-200 dark:border-gray-800"
-															: "border-gray-200 dark:border-gray-800"
+																? "bg-red-900/30 border-red-700 text-red-200"
+																: "border-gray-700 text-gray-300"
+															: "border-gray-700 text-gray-300"
 													} transition-colors`}
 												>
 													<RadioGroupItem value={optionIndex.toString()} id={`q${questionIndex}-a${optionIndex}`} />
@@ -221,7 +223,7 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 														{option}
 													</Label>
 													{showResults && optionIndex === quizItem.answerIndex && (
-														<span className="text-green-600 dark:text-green-400 text-sm ml-2">Correct answer</span>
+														<span className="text-green-400 text-sm ml-2">Correct answer</span>
 													)}
 												</div>
 											))}
@@ -237,19 +239,22 @@ export function LearningTrackComponent({ track, level, onComplete }: LearningTra
 					</Tabs>
 				</CardContent>
 
-				<CardFooter className="flex justify-between border-t pt-4">
-					<Button variant="outline" onClick={handlePreviousSection} disabled={activeSection === 0}>
+				<CardFooter className="flex justify-between border-t border-[#2a2b33] pt-4">
+					<Button variant="outline" onClick={handlePreviousSection} disabled={activeSection === 0} 
+					className="border-gray-700 text-gray-300 hover:bg-[#252630] hover:text-white">
 						Previous
 					</Button>
 
 					<div className="flex gap-2">
 						{activeTab === "content" && currentSection.quiz && (
-							<Button variant="secondary" onClick={() => setActiveTab("quiz")}>
+							<Button variant="secondary" onClick={() => setActiveTab("quiz")}
+							className="bg-[#252630] text-gray-200 hover:bg-[#2a2c36] hover:text-white">
 								Take Quiz
 							</Button>
 						)}
 
-						<Button onClick={handleNextSection} disabled={activeSection === track.sections.length - 1}>
+						<Button onClick={handleNextSection} disabled={activeSection === track.sections.length - 1}
+						className="bg-blue-600 hover:bg-blue-700 text-white">
 							Next Section
 						</Button>
 					</div>

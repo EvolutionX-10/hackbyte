@@ -183,15 +183,15 @@ export default function LearnPage() {
 		}
 
 		return (
-			<main className="min-h-screen flex flex-col items-center justify-center p-4 bg-background">
-				<Card className="w-full max-w-3xl">
+			<main className="min-h-screen flex flex-col items-center justify-center p-4 bg-[#17181c]">
+				<Card className="w-full max-w-3xl bg-[#1c1d23] border-[#2a2b33]">
 					<CardHeader>
-						<CardTitle>Loading Your Finance Learning Track</CardTitle>
-						<CardDescription>{loadingMessage}</CardDescription>
+						<CardTitle className="text-white">Loading Your Finance Learning Track</CardTitle>
+						<CardDescription className="text-gray-400">{loadingMessage}</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<Progress value={progress} className="h-2 w-full my-2" />
-						<p className="text-xs text-muted-foreground text-right mt-1">{Math.round(progress)}%</p>
+						<Progress value={progress} className="h-2 w-full my-2 bg-[#252630]" />
+						<p className="text-xs text-gray-400 text-right mt-1">{Math.round(progress)}%</p>
 					</CardContent>
 				</Card>
 			</main>
@@ -200,15 +200,15 @@ export default function LearnPage() {
 
 	if (knowledge === undefined) {
 		return (
-			<main className="min-h-screen flex items-center justify-center p-4 bg-background">
-				<h1 className="text-4xl">Loading...</h1>
+			<main className="min-h-screen flex items-center justify-center p-4 bg-[#17181c]">
+				<h1 className="text-4xl text-white">Loading...</h1>
 			</main>
 		);
 	}
 
 	if (knowledge === null) {
 		return (
-			<main className="min-h-screen flex items-center justify-center p-4 bg-background">
+			<main className="min-h-screen flex items-center justify-center p-4 bg-[#17181c]">
 				<div className="w-full max-w-3xl">
 					<QuizApp />
 				</div>
@@ -217,13 +217,13 @@ export default function LearnPage() {
 	}
 
 	return (
-		<main className="min-h-screen container py-8 bg-background">
+		<main className="min-h-screen container py-8 bg-[#17181c]">
 			<div className="max-w-4xl mx-auto">
 				<div className="space-y-8">
 					<div className="flex flex-wrap justify-between items-center">
 						<div>
-							<h1 className="text-3xl font-bold mb-2">Your Learning Journey</h1>
-							<p className="text-muted-foreground">
+							<h1 className="text-3xl font-bold mb-2 text-white">Your Learning Journey</h1>
+							<p className="text-gray-400">
 								Customized finance education for your {knowledge.toLowerCase()} level
 								{selectedTopic && ` - ${selectedTopic}`}
 								{selectedLanguage !== ContentLanguage.ENGLISH && ` in ${selectedLanguage}`}
@@ -231,15 +231,27 @@ export default function LearnPage() {
 						</div>
 
 						<div className="flex gap-3 mt-2 sm:mt-0">
-							<Button variant="outline" onClick={() => setShowLanguageSelector(!showLanguageSelector)}>
+							<Button 
+								variant="outline" 
+								onClick={() => setShowLanguageSelector(!showLanguageSelector)}
+								className="border-gray-700 text-gray-300 hover:bg-[#252630] hover:text-white"
+							>
 								{showLanguageSelector ? "Hide Languages" : "Change Language"}
 							</Button>
 
-							<Button variant="outline" onClick={() => setShowTopicSelector(!showTopicSelector)}>
+							<Button 
+								variant="outline" 
+								onClick={() => setShowTopicSelector(!showTopicSelector)}
+								className="border-gray-700 text-gray-300 hover:bg-[#252630] hover:text-white"
+							>
 								{showTopicSelector ? "Hide Topics" : "Change Topic"}
 							</Button>
 
-							<Button variant="secondary" onClick={() => fetchLearningTrack(knowledge, selectedTopic || undefined)}>
+							<Button 
+								variant="secondary" 
+								onClick={() => fetchLearningTrack(knowledge, selectedTopic || undefined)}
+								className="bg-[#252630] text-gray-200 hover:bg-[#2a2c36] hover:text-white"
+							>
 								Refresh Content
 							</Button>
 						</div>
@@ -254,9 +266,14 @@ export default function LearnPage() {
 					{learningTrack ? (
 						<LearningTrackComponent track={learningTrack} level={knowledge} onComplete={handleTrackComplete} />
 					) : (
-						<div className="text-center p-12 border rounded-md">
+						<div className="text-center p-12 border border-[#2a2b33] rounded-md bg-[#1c1d23] text-white">
 							<h2 className="text-xl mb-4">Failed to load learning content</h2>
-							<Button onClick={() => fetchLearningTrack(knowledge, selectedTopic || undefined)}>Try Again</Button>
+							<Button 
+								onClick={() => fetchLearningTrack(knowledge, selectedTopic || undefined)}
+								className="bg-blue-600 hover:bg-blue-700 text-white"
+							>
+								Try Again
+							</Button>
 						</div>
 					)}
 				</div>

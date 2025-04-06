@@ -56,24 +56,24 @@ export function ResultsScreen({ score, totalQuestions, onRestartAction }: Result
 	}
 
 	return (
-		<div className="text-center py-8">
+		<div className="text-center py-8 text-gray-100">
 			<div className="flex justify-center mb-6">
-				<div className="bg-primary/10 p-4 rounded-full">
-					<Award className="h-12 w-12 text-primary" />
+				<div className="bg-lime-500/20 p-4 rounded-full">
+					<Award className="h-12 w-12 text-lime-400" />
 				</div>
 			</div>
 
-			<h2 className="text-xl font-semibold mb-2">Quiz Completed!</h2>
-			<p className="text-muted-foreground mb-6">{message}</p>
+			<h2 className="text-xl font-semibold mb-2 text-gray-100">Quiz Completed!</h2>
+			<p className="text-gray-400 mb-6">{message}</p>
 
-			<div className="bg-muted p-6 rounded-lg mb-8">
-				<div className="text-4xl font-bold mb-2">
+			<div className="bg-[#17181c] p-6 rounded-lg mb-8 border border-gray-700">
+				<div className="text-4xl font-bold mb-2 text-gray-100">
 					{score} / {totalQuestions}
 				</div>
-				<div className="text-lg text-muted-foreground">{percentage}% Score</div>
+				<div className="text-lg text-gray-400">{percentage}% Score</div>
 			</div>
 
-			<Button onClick={onRestartAction} className="gap-2">
+			<Button onClick={onRestartAction} className="gap-2 bg-lime-500 hover:bg-lime-600 text-white">
 				<RotateCcw className="h-4 w-4" />
 				Take Quiz Again
 			</Button>

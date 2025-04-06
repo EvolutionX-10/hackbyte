@@ -92,10 +92,10 @@ export function QuizApp() {
 	};
 
 	return (
-		<Card className="shadow-lg">
+		<Card className="shadow-lg bg-[#1c1d23] border-gray-700">
 			<CardHeader className="text-center">
-				<CardTitle className="text-2xl font-bold text-primary">Finance Quiz</CardTitle>
-				<CardDescription>Test your knowledge of finance and stock markets</CardDescription>
+				<CardTitle className="text-2xl font-bold text-lime-400">Finance Quiz</CardTitle>
+				<CardDescription className="text-gray-300">Test your knowledge of finance and stock markets</CardDescription>
 			</CardHeader>
 
 			<CardContent>
@@ -104,12 +104,12 @@ export function QuizApp() {
 				{quizState === "question" && (
 					<>
 						<div className="mb-4">
-							<div className="flex justify-between text-sm text-muted-foreground mb-2">
+							<div className="flex justify-between text-sm text-gray-400 mb-2">
 								<span>
 									Question {currentQuestionIndex + 1} of {questions.length}
 								</span>
 							</div>
-							<Progress value={((currentQuestionIndex + 1) / questions.length) * 100} />
+							<Progress value={((currentQuestionIndex + 1) / questions.length) * 100} className="bg-gray-700" />
 						</div>
 
 						<QuestionScreen question={questions[currentQuestionIndex]} onAnswerAction={handleAnswer} />
@@ -122,8 +122,8 @@ export function QuizApp() {
 			</CardContent>
 
 			{quizState !== "start" && quizState !== "results" && (
-				<CardFooter className="flex justify-between">
-					<div className="text-sm text-muted-foreground">
+				<CardFooter className="flex justify-between border-t border-gray-700">
+					<div className="text-sm text-gray-400">
 						{currentQuestionIndex + 1} of {questions.length}
 					</div>
 				</CardFooter>

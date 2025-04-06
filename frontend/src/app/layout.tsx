@@ -38,7 +38,9 @@ export default function RootLayout({
 				<Hydrate>
 					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 						{/* Navbar should be positioned at the top, so it stays on top */}
-						<Navbar />
+						<div className="sticky top-0 left-0 z-50 w-full">
+							<Navbar />
+						</div>
 						<main>{children}</main>
 						<Toaster />
 						<Footer />

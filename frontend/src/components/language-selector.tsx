@@ -22,11 +22,11 @@ interface LanguageSelectorProps {
 
 export function LanguageSelector({ selectedLanguage, onSelect }: LanguageSelectorProps) {
 	return (
-		<Card>
+		<Card className="bg-[#1c1d23] border-gray-700">
 			<CardContent className="pt-6">
 				<div className="space-y-4">
 					<div className="flex flex-wrap items-center justify-between">
-						<h3 className="text-lg font-medium">Choose Learning Language</h3>
+						<h3 className="text-lg font-medium text-gray-100">Choose Learning Language</h3>
 					</div>
 
 					<RadioGroup
@@ -41,13 +41,13 @@ export function LanguageSelector({ selectedLanguage, onSelect }: LanguageSelecto
 								key={language}
 								className={`flex items-center space-x-2 border rounded-lg p-3 cursor-pointer ${
 									selectedLanguage === language
-										? "border-primary bg-primary/5"
-										: "border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900"
+										? "border-blue-500 bg-blue-500/20"
+										: "border-gray-700 hover:bg-gray-800"
 								}`}
 								onClick={() => onSelect(language)}
 							>
-								<RadioGroupItem value={language} id={`language-${language}`} />
-								<Label htmlFor={`language-${language}`} className="w-full cursor-pointer">
+								<RadioGroupItem value={language} id={`language-${language}`} className="text-blue-400"/>
+								<Label htmlFor={`language-${language}`} className="w-full cursor-pointer text-gray-200">
 									{language}
 								</Label>
 							</div>
