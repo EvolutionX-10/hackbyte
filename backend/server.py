@@ -1,17 +1,22 @@
-from flask import Flask
+from flask import Flask, jsonify
+from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from socket_handler import start_socket_client
-from try_run import predict_price, simulate_trading_with_gemini 
-from flask import Flask, jsonify
+from try_run import predict_price, simulate_trading_with_gemini
 import json
 import threading
 import pandas as pd
-# from try_run import predict_price, simulate_trading_with_gemini  # Import your core logic
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")  # Allow all origins for testing
+
+# ✅ Only allow localhost:3000 to access your Flask endpoints
+CORS(app, origins=["http://localhost:3000"])
+
+# ✅ Allow WebSocket CORS for the same origin
+socketio = SocketIO(app, cors_allowed_origins=["http://localhost:3000"])
 
 latest_stock_data = {}
+
 @app.route("/predict", methods=["GET"])
 def serve_prediction():
     global latest_stock_data
@@ -42,5 +47,5 @@ if __name__ == "__main__":
     socket_thread = threading.Thread(target=start_socket_client)
     socket_thread.start()
 
-    # Start Flask API
-    app.run(port=5000)
+    # Use socketio.run to support both Flask and WebSocket with CORS
+    socketio.run(app, port=5000)

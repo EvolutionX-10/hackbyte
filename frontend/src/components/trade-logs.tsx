@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowUpCircle, ArrowDownCircle, PauseCircle, Repeat } from "lucide-react";
+import { Tooltip } from "@heroui/tooltip";
 
 // Define the trade log entry structure
 type ActionType = "BUY" | "SELL" | "HOLD" | "SHORT";
@@ -12,6 +13,7 @@ interface TradeLog {
 	quantity: number;
 	value: number;
 	profitLoss?: number;
+	reason: string;
 }
 
 interface TradeLogsProps {
@@ -48,35 +50,48 @@ const TradeLogItem = ({ log }: { log: TradeLog }) => {
 				};
 		}
 	};
-
+	console.log(log);
 	const { icon, bgColor, textColor } = getActionDetails(log.action);
+	const placement = "left-start"
 
 	return (
-		<div className="bg-zinc-200 dark:bg-[#1e1f25] rounded-lg p-4 mb-3 border-l-4 border-[#2e2f36] hover:border-l-blue-500 transition-all">
-			<div className="flex justify-between items-center">
-				<div className="flex items-center gap-3">
-					<div className={`h-10 w-10 rounded-full ${bgColor} flex items-center justify-center`}>{icon}</div>
-					<div>
-						<p className={`font-semibold ${textColor}`}>{log.action}</p>
-						<p className="text-gray-400 text-sm">{new Date(log.timestamp).toLocaleTimeString()}</p>
+		<Tooltip 
+			placement={placement}
+			content={
+				<div className="text-gray-200 text-sm bg-secondary  p-2 rounded-lg max-w-sm border border-lime-50/50">
+					<p>{log.reason}</p>
+				</div>
+			} 
+			showArrow={true}
+		>
+
+			<div className="bg-zinc-200 dark:bg-[#1e1f25] rounded-lg p-4 mb-3 border-l-4 border-[#2e2f36] hover:border-l-blue-500 transition-all">
+				<div className="flex justify-between items-center">
+					<div className="flex items-center gap-3">
+						<div className={`h-10 w-10 rounded-full ${bgColor} flex items-center justify-center`}>{icon}</div>
+						<div>
+							<p className={`font-semibold ${textColor}`}>{log.action}</p>
+							<p className="text-gray-400 text-sm">{new Date(log.timestamp).toLocaleTimeString()}</p>
+						</div>
+					</div>
+					<div className="text-right">
+						<p className="font-mono text-gray-200">₹{log.price.toFixed(2)}</p>
+						<p className="text-gray-400 text-sm">x{log.quantity}</p>
 					</div>
 				</div>
-				<div className="text-right">
-					<p className="font-mono text-gray-200">₹{log.price.toFixed(2)}</p>
-					<p className="text-gray-400 text-sm">x{log.quantity}</p>
+				<div className="mt-3 flex justify-between items-center pt-2 border-t border-[#2e2f36]">
+					<span className="text-gray-300 text-sm">
+						Value: <span className="font-medium">₹{log.value.toFixed(2)}</span>
+					</span>
+					{log.profitLoss !== undefined && (
+						<span className={`text-sm ${log.profitLoss >= 0 ? "text-green-500" : "text-red-500"}`}>
+							P/L: <span className="font-medium">₹{log.profitLoss.toFixed(2)}</span>
+						</span>
+					)}
 				</div>
 			</div>
-			<div className="mt-3 flex justify-between items-center pt-2 border-t border-[#2e2f36]">
-				<span className="text-gray-300 text-sm">
-					Value: <span className="font-medium">₹{log.value.toFixed(2)}</span>
-				</span>
-				{log.profitLoss !== undefined && (
-					<span className={`text-sm ${log.profitLoss >= 0 ? "text-green-500" : "text-red-500"}`}>
-						P/L: <span className="font-medium">₹{log.profitLoss.toFixed(2)}</span>
-					</span>
-				)}
-			</div>
-		</div>
+		</Tooltip>
+
 	);
 };
 // TradeLogs.tsx
