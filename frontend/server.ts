@@ -59,7 +59,13 @@ nextApp.prepare().then(() => {
 				ws.close();
 			}
 		}, 1000); // 1 minute interval (60000 ms)
-
+		ws.on("message", (message) => {
+			const parsed = JSON.parse(message.toString());
+			if (parsed.type === "log") {
+				console.log("📋 Client Log:", parsed.content);
+			}
+		});
+		
 		ws.on("close", () => {
 			clients.delete(ws);
 			console.log("Client Disconnected");

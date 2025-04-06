@@ -7,3 +7,9 @@ torch
 torchvision 
 torchaudio
 scikit-learn
+pandas_ta
+google-genai
+websocket-client
+schedule
+flask-socketio
+google-generativeai
