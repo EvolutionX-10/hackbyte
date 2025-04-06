@@ -5,17 +5,17 @@ import { SafariV2 } from "../magicui/dynamic-safari";
 const Showcase: React.FC = () => {
 	return (
 		<div className="relative">
-			<Safari 
+			{/* <Safari 
                 url="growhack.ai" 
                 className="aspect-[16/9] w-full max-w-[64rem] mx-auto" 
                 imageSrc="/placeholder.png" 
-            />
-            
-            {/* <SafariV2
-                url="https://www.paddle.com/"
-                className="aspect-[16/9] w-full max-w-[64rem] mx-auto"
-                iframeSrc="https://www.paddle.com"
             /> */}
+            
+            <SafariV2
+                url="growhack.ai"
+                className="aspect-[16/9] w-full max-w-[64rem] mx-auto"
+                iframeSrc="https://growhack.vercel.app/dashboard"
+            />
 		</div>
 	);
 };
