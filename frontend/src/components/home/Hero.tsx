@@ -37,11 +37,11 @@ const Hero: React.FC = () => {
 				</div>
 
 				<div className="text-center">
-					<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-center mb-6">
-						One stop solution for all your 
+					<h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-6">
+						Because finance shouldn&apos;t feel like 
 						<TypingAnimation 
 							className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold">
-								investing needs.
+								rocket science.
 						</TypingAnimation>
 					</h1>
 
