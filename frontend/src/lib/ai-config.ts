@@ -5,7 +5,7 @@ export const genAI = createGoogleGenerativeAI();
 
 // Helper function to create a model instance with optional custom configuration
 export function createModel(customConfig = {}) {
-	return genAI("gemini-2.5-pro-exp-03-25", {
+	return genAI("gemini-2.0-flash-001", {
 		...customConfig,
 	});
 }
@@ -18,6 +18,18 @@ export enum FinanceTopics {
 	RISK_ASSESSMENT = "Risk Assessment",
 	FINANCIAL_ANALYSIS = "Financial Analysis",
 	ADVANCED_TRADING = "Advanced Trading Strategies",
+}
+
+// Available languages for content generation
+export enum ContentLanguage {
+	ENGLISH = "English",
+	SPANISH = "Spanish",
+	FRENCH = "French",
+	GERMAN = "German",
+	CHINESE = "Chinese",
+	JAPANESE = "Japanese",
+	HINDI = "Hindi",
+	ARABIC = "Arabic",
 }
 
 // Learning progress tracking type

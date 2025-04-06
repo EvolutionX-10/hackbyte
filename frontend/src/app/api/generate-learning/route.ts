@@ -1,6 +1,6 @@
 import { KnowledgeLevel } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { createModel, FinanceTopics } from "@/lib/ai-config";
+import { ContentLanguage, createModel, FinanceTopics } from "@/lib/ai-config";
 import { generateText } from "ai";
 import { generateLevelSpecificPrompt } from "@/lib/prompt-templates";
 
@@ -8,14 +8,14 @@ export async function POST(request: NextRequest) {
 	try {
 		// Validate request with proper authorization (should check JWT in production)
 		const body = await request.json();
-		const { level, topic } = body;
+		const { level, topic, language = ContentLanguage.ENGLISH } = body;
 
 		if (!level || !Object.values(KnowledgeLevel).includes(level)) {
 			return NextResponse.json({ error: "Invalid or missing knowledge level" }, { status: 400 });
 		}
 
 		// Generate learning content based on user's knowledge level
-		const learningTrack = await generateLearningTrack(level as KnowledgeLevel, topic);
+		const learningTrack = await generateLearningTrack(level as KnowledgeLevel, topic, language);
 
 		return NextResponse.json({ success: true, data: learningTrack });
 	} catch (error) {
@@ -24,25 +24,29 @@ export async function POST(request: NextRequest) {
 	}
 }
 
-async function generateLearningTrack(level: KnowledgeLevel, topic?: string) {
+async function generateLearningTrack(
+	level: KnowledgeLevel,
+	topic?: string,
+	language: ContentLanguage = ContentLanguage.ENGLISH
+) {
 	// Configure model settings based on knowledge level
 	const modelConfig = {
 		// Less creativity for beginners for clearer explanations
-		temperature: level === KnowledgeLevel.BEGINNER ? 0.5 : level === KnowledgeLevel.INTERMEDIATE ? 0.65 : 0.75,
+		temperature: level === KnowledgeLevel.BEGINNER ? 0.1 : level === KnowledgeLevel.INTERMEDIATE ? 0.65 : 0.75,
 		maxOutputTokens: 4096, // Allow more detailed content
 	};
 
 	const model = createModel();
 
-	// Generate specialized prompt based on user level and optional topic
-	const prompt = generateLevelSpecificPrompt(level, topic as FinanceTopics);
+	// Generate specialized prompt based on user level, optional topic, and language
+	const prompt = generateLevelSpecificPrompt(level, topic as FinanceTopics, language);
 
 	try {
 		const { text } = await generateText({
 			model,
 			prompt,
 			maxTokens: 4096,
-			temperature: modelConfig.temperature,
+			temperature: 0,
 		});
 
 		// Extract JSON from response (in case there's additional text)

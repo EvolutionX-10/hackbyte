@@ -1,5 +1,5 @@
 import { KnowledgeLevel } from "@prisma/client";
-import { FinanceTopics } from "./ai-config";
+import { ContentLanguage, FinanceTopics } from "./ai-config";
 
 // Base prompt structure for all knowledge levels
 const basePrompt = `
@@ -97,15 +97,51 @@ Focus on sophisticated trading strategies, technical analysis, and market timing
   `,
 };
 
+// Language-specific instructions for the AI
+const languagePrompts: Record<ContentLanguage, string> = {
+	[ContentLanguage.ENGLISH]: `
+Generate the learning content in English.
+  `,
+	[ContentLanguage.SPANISH]: `
+Generate the learning content in Spanish. The title, description, section titles, content, questions, and all options should be in Spanish.
+  `,
+	[ContentLanguage.FRENCH]: `
+Generate the learning content in French. The title, description, section titles, content, questions, and all options should be in French.
+  `,
+	[ContentLanguage.GERMAN]: `
+Generate the learning content in German. The title, description, section titles, content, questions, and all options should be in German.
+  `,
+	[ContentLanguage.CHINESE]: `
+Generate the learning content in Chinese (Mandarin). The title, description, section titles, content, questions, and all options should be in Chinese.
+  `,
+	[ContentLanguage.JAPANESE]: `
+Generate the learning content in Japanese. The title, description, section titles, content, questions, and all options should be in Japanese.
+  `,
+	[ContentLanguage.HINDI]: `
+Generate the learning content in Hindi. The title, description, section titles, content, questions, and all options should be in Hindi.
+  `,
+	[ContentLanguage.ARABIC]: `
+Generate the learning content in Arabic. The title, description, section titles, content, questions, and all options should be in Arabic. Note that Arabic text reads right-to-left.
+  `,
+};
+
 /**
- * Generates a specialized prompt for learning content based on user level and optional topic
+ * Generates a specialized prompt for learning content based on user level, optional topic, and language
  */
-export function generateLevelSpecificPrompt(level: KnowledgeLevel, topic?: FinanceTopics): string {
+export function generateLevelSpecificPrompt(
+	level: KnowledgeLevel,
+	topic?: FinanceTopics,
+	language: ContentLanguage = ContentLanguage.ENGLISH
+): string {
 	let prompt = basePrompt + levelSpecificPrompts[level];
 
 	if (topic) {
 		prompt += topicSpecificPrompts[topic];
 	}
 
+	// Add language-specific instruction
+	prompt += languagePrompts[language];
+	console.log("Final Prompt");
+	console.log(prompt);
 	return prompt;
 }

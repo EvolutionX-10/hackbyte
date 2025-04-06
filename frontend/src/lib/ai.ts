@@ -1,5 +1,5 @@
 import { KnowledgeLevel } from "@prisma/client";
-import { FinanceTopics } from "./ai-config";
+import { ContentLanguage, FinanceTopics } from "./ai-config";
 
 export type LearningTrack = {
 	title: string;
@@ -17,12 +17,16 @@ export type LearningSection = {
 	}[];
 };
 
-export async function generateLearningTrack(level: KnowledgeLevel, topic?: FinanceTopics): Promise<LearningTrack> {
+export async function generateLearningTrack(
+	level: KnowledgeLevel,
+	topic?: FinanceTopics,
+	language: ContentLanguage = ContentLanguage.ENGLISH
+): Promise<LearningTrack> {
 	try {
 		const response = await fetch("/api/generate-learning", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ level, topic }),
+			body: JSON.stringify({ level, topic, language }),
 		});
 
 		if (!response.ok) {
