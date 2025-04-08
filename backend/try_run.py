@@ -144,7 +144,7 @@ def simulate_trading_with_gemini(stock_data, initial_balance=10000, lookahead=5,
                     profit = position["shares"] * (position["entry_price"] - current_price)
                     balance += profit
                     positions.pop(stock)
-                    action = "COVER"
+                    action = "SELL"
                 else:
                     action = "HOLD"
 
@@ -163,7 +163,7 @@ def simulate_trading_with_gemini(stock_data, initial_balance=10000, lookahead=5,
         elif pos["type"] == "short":
             profit = pos["shares"] * (pos["entry_price"] - final_price)
             balance += profit
-            trade_log.append((n_days - 1, stock, "FINAL COVER", final_price, balance, "Final liquidation of short position."))
+            trade_log.append((n_days - 1, stock, "FINAL SELL", final_price, balance, "Final liquidation of short position."))
 
     profit = balance - initial_balance
     return balance, profit, trade_log
